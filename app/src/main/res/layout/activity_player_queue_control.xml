@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:background="?attr/colorPrimary"
             android:theme="@style/ToolbarTheme"
@@ -48,7 +48,6 @@
         android:paddingTop="5dp"
         android:paddingRight="30dp"
         android:paddingBottom="5dp"
-        android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
         android:visibility="gone"
@@ -65,7 +64,6 @@
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical"
-        android:padding="8dp"
         tools:ignore="RtlHardcoded,RtlSymmetry">
 
         <org.schabi.newpipe.views.NewPipeTextView
@@ -109,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:minHeight="40dp"
+            android:minHeight="20dp"
             android:text="-:--:--"
             android:textColor="?attr/colorAccent"
             tools:ignore="HardcodedText"
@@ -123,9 +121,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingStart="12dp"
-            android:paddingTop="6dp"
             android:paddingEnd="12dp"
-            android:paddingBottom="4dp"
             tools:progress="25"
             tools:secondaryProgress="50" />
 
@@ -168,7 +164,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="6dp"
+            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/control_backward"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
@@ -194,6 +190,7 @@
             tools:ignore="ContentDescription" />
 
         <ImageButton
+            android:visibility="invisible"
             android:id="@+id/control_fast_rewind"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -242,6 +239,7 @@
 
 
         <ImageButton
+            android:visibility="invisible"
             android:id="@+id/control_fast_forward"
             android:layout_width="40dp"
             android:layout_height="40dp"
