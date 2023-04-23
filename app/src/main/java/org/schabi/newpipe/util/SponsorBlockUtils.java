@@ -18,6 +18,7 @@ import org.schabi.newpipe.App;
 import org.schabi.newpipe.DownloaderImpl;
 import org.schabi.newpipe.MainActivity;
 import org.schabi.newpipe.R;
+import org.schabi.newpipe.extractor.ServiceList;
 import org.schabi.newpipe.extractor.stream.StreamInfo;
 import org.schabi.newpipe.player.playqueue.PlayQueueItem;
 import org.schabi.newpipe.views.MarkableSeekBar;
@@ -28,11 +29,14 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class SponsorBlockUtils {
     private static final Application APP = App.getApp();
     private static final String TAG = SponsorBlockUtils.class.getSimpleName();
     private static final boolean DEBUG = MainActivity.DEBUG;
+    private static Map<String, VideoSegment[]> videoSegmentsCache = new HashMap<>();
 
     private SponsorBlockUtils() {
     }
@@ -53,7 +57,7 @@ public final class SponsorBlockUtils {
         final String apiUrl = prefs.getString(context
                 .getString(R.string.sponsor_block_api_url_key), null);
 
-        if (!streamInfo.getUrl().startsWith("https://www.youtube.com")
+        if (streamInfo.getServiceId() != ServiceList.YouTube.getServiceId()
                 || apiUrl == null
                 || apiUrl.isEmpty()) {
             return null;
@@ -120,6 +124,11 @@ public final class SponsorBlockUtils {
         final String params = "skipSegments/" + videoIdHash.substring(0, 4)
                 + "?categories=" + categoryParams;
 
+        final VideoSegment[] alreadyFetchedVideoSegments = videoSegmentsCache.get(params);
+        if (alreadyFetchedVideoSegments != null) {
+            return alreadyFetchedVideoSegments;
+        }
+
         if (!isConnected()) {
             return null;
         }
@@ -177,8 +186,9 @@ public final class SponsorBlockUtils {
                 result.add(segment);
             }
         }
-
-        return result.toArray(new VideoSegment[0]);
+        final VideoSegment[] segments = result.toArray(new VideoSegment[0]);
+        videoSegmentsCache.put(params, segments);
+        return segments;
     }
 
     private static boolean isConnected() {
