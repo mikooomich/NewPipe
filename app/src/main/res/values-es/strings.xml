@@ -840,7 +840,7 @@
     <string name="disable_error_reports_summary">Evitar que aparezcan todas las pantallas de informe de errores. Esto puede hacer que la aplicación se comporte de forma inesperada. <b>¡UTILÍCELO BAJO SU PROPIO RIESGO!</b></string>
     <string name="enable_return_youtube_dislike_title">Mostrar Conteo de No Me Gusta</string>
     <string name="enable_return_youtube_dislike_summary">Utilizar el API de ReturnYouTubeDislike API para mostrar la cantidad de no me gusta de un video. Esto solo funciona con videos de YouTube.\n<b>ADVERTENCIA: Su dirección IP será visible para la API. Utilícelo bajo su propio riesgo.</b></string>
-</resources>
+
     <string name="no_streams">Sin retransmisiones</string>
     <string name="no_live_streams">Sin transmisiones en directo</string>
     <string name="channel_tab_videos">Vídeos</string>
