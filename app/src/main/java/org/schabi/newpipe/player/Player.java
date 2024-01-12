@@ -982,42 +982,25 @@ public final class Player implements PlaybackListener, Listener {
 
             if (prefs.getBoolean(
                     context.getString(R.string.sponsor_block_notifications_key), false)) {
-                String toastText = "";
-
-                switch (segment.category) {
-                    case "sponsor":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_sponsor_toast);
-                        break;
-                    case "intro":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_intro_toast);
-                        break;
-                    case "outro":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_outro_toast);
-                        break;
-                    case "interaction":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_interaction_toast);
-                        break;
-                    case "selfpromo":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_self_promo_toast);
-                        break;
-                    case "music_offtopic":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_non_music_toast);
-                        break;
-                    case "preview":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_preview_toast);
-                        break;
-                    case "filler":
-                        toastText = context
-                                .getString(R.string.sponsor_block_skip_filler_toast);
-                        break;
-                }
+                final String toastText = switch (segment.category) {
+                    case "sponsor" -> context
+                            .getString(R.string.sponsor_block_skip_sponsor_toast);
+                    case "intro" -> context
+                            .getString(R.string.sponsor_block_skip_intro_toast);
+                    case "outro" -> context
+                            .getString(R.string.sponsor_block_skip_outro_toast);
+                    case "interaction" -> context
+                            .getString(R.string.sponsor_block_skip_interaction_toast);
+                    case "selfpromo" -> context
+                            .getString(R.string.sponsor_block_skip_self_promo_toast);
+                    case "music_offtopic" -> context
+                            .getString(R.string.sponsor_block_skip_non_music_toast);
+                    case "preview" -> context
+                            .getString(R.string.sponsor_block_skip_preview_toast);
+                    case "filler" -> context
+                            .getString(R.string.sponsor_block_skip_filler_toast);
+                    default -> "";
+                };
 
                 Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
             }
