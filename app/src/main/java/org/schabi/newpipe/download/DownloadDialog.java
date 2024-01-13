@@ -77,6 +77,7 @@ import org.schabi.newpipe.util.VideoSegment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -1066,7 +1067,7 @@ public class DownloadDialog extends DialogFragment
         final char kind;
         int threads = dialogBinding.threads.getProgress() + 1;
         final String[] urls;
-        final MissionRecoveryInfo[] recoveryInfo;
+        final List<MissionRecoveryInfo> recoveryInfo;
         String psName = null;
         String[] psArgs = null;
         long nearLength = 0;
@@ -1131,9 +1132,7 @@ public class DownloadDialog extends DialogFragment
             urls = new String[] {
                     selectedStream.getContent()
             };
-            recoveryInfo = new MissionRecoveryInfo[] {
-                    new MissionRecoveryInfo(selectedStream)
-            };
+            recoveryInfo = List.of(new MissionRecoveryInfo(selectedStream));
         } else {
             if (secondaryStream.getDeliveryMethod() != PROGRESSIVE_HTTP) {
                 throw new IllegalArgumentException("Unsupported stream delivery format"
@@ -1143,12 +1142,14 @@ public class DownloadDialog extends DialogFragment
             urls = new String[] {
                     selectedStream.getContent(), secondaryStream.getContent()
             };
-            recoveryInfo = new MissionRecoveryInfo[] {new MissionRecoveryInfo(selectedStream),
-                    new MissionRecoveryInfo(secondaryStream)};
+            recoveryInfo = List.of(
+                    new MissionRecoveryInfo(selectedStream),
+                    new MissionRecoveryInfo(secondaryStream)
+            );
         }
 
         DownloadManagerService.startMission(context, urls, storage, kind, threads,
-                currentInfo.getUrl(), psName, psArgs, nearLength, recoveryInfo,
+                currentInfo.getUrl(), psName, psArgs, nearLength, new ArrayList<>(recoveryInfo),
                 segments);
 
         Toast.makeText(context, getString(R.string.download_has_started),
