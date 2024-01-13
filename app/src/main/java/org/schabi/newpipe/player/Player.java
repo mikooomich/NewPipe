@@ -55,12 +55,14 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.math.MathUtils;
 import androidx.preference.PreferenceManager;
 
@@ -766,10 +768,11 @@ public final class Player implements PlaybackListener, Listener {
         UIs.call(playerUi -> playerUi.onBroadcastReceived(intent));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void registerBroadcastReceiver() {
         // Try to unregister current first
         unregisterBroadcastReceiver();
-        context.registerReceiver(broadcastReceiver, intentFilter);
+        context.registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
     }
 
     private void unregisterBroadcastReceiver() {

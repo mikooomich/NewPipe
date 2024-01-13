@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -947,7 +948,8 @@ public class RouterActivity extends AppCompatActivity {
         @Override
         public void onCreate() {
             super.onCreate();
-            startForeground(ID, createNotification().build());
+            startForeground(ID, createNotification().build(),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
         }
 
         @Override

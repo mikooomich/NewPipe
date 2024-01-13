@@ -24,9 +24,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.PendingIntentCompat
@@ -91,7 +93,7 @@ class FeedLoadService : Service() {
         loadingDisposable = feedLoadManager.startLoading(groupId)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                startForeground(NOTIFICATION_ID, notificationBuilder.build())
+                startForeground(NOTIFICATION_ID, notificationBuilder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
             }
             .subscribe { _, error: Throwable? -> // explicitly mark error as nullable
                 if (error != null) {
@@ -192,6 +194,7 @@ class FeedLoadService : Service() {
 
     private lateinit var broadcastReceiver: BroadcastReceiver
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setupBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -200,7 +203,7 @@ class FeedLoadService : Service() {
                 }
             }
         }
-        registerReceiver(broadcastReceiver, IntentFilter(ACTION_CANCEL))
+        registerReceiver(broadcastReceiver, IntentFilter(ACTION_CANCEL), RECEIVER_NOT_EXPORTED)
     }
 
     // /////////////////////////////////////////////////////////////////////////

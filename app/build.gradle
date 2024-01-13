@@ -19,9 +19,9 @@ android {
         applicationId "com.javulticat.newpipe"
         resValue "string", "app_name", "NewPipe SponsorBlock"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 996
-        versionName "0.26.1"
+        versionName "0.26.1-r2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

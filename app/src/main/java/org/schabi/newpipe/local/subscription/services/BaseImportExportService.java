@@ -21,6 +21,7 @@ package org.schabi.newpipe.local.subscription.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.IBinder;
 import android.text.TextUtils;
@@ -117,7 +118,8 @@ public abstract class BaseImportExportService extends Service {
     protected void setupNotification() {
         notificationManager = NotificationManagerCompat.from(this);
         notificationBuilder = createNotification();
-        startForeground(getNotificationId(), notificationBuilder.build());
+        startForeground(getNotificationId(), notificationBuilder.build(),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
 
         final Function<Flowable<String>, Publisher<String>> throttleAfterFirstEmission = flow ->
                 flow.take(1).concatWith(flow.skip(1)

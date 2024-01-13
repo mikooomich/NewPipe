@@ -47,6 +47,7 @@ import android.widget.Toast;
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -1385,6 +1386,7 @@ public final class VideoDetailFragment
                 getString(R.string.show_age_restricted_content_title)));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void setupBroadcastReceiver() {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -1414,7 +1416,7 @@ public final class VideoDetailFragment
         intentFilter.addAction(ACTION_SHOW_MAIN_PLAYER);
         intentFilter.addAction(ACTION_HIDE_MAIN_PLAYER);
         intentFilter.addAction(ACTION_PLAYER_STARTED);
-        activity.registerReceiver(broadcastReceiver, intentFilter);
+        activity.registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
     }
 
 

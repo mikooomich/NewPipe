@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.ServiceInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -339,7 +340,7 @@ public class DownloadManagerService extends Service {
         if (state == mForeground) return;
 
         if (state) {
-            startForeground(FOREGROUND_NOTIFICATION_ID, mNotification);
+            startForeground(FOREGROUND_NOTIFICATION_ID, mNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
         } else {
             ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE);
         }
